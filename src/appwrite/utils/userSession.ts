@@ -1,5 +1,3 @@
-import { BASE_URL } from "@config/index";
-
 import { authAccount, uniqueId } from "../config";
 
 export async function createUserSession(email: string, password: string) {
@@ -42,20 +40,6 @@ export async function deleteSession() {
   }
 }
 
-export function signInWithOAuth(providerName: "facebook" | "google") {
-  try {
-    const oAuth = authAccount.createOAuth2Session(
-      providerName,
-      `${BASE_URL}/oauth`,
-      `${BASE_URL}/login`
-    );
-
-    return oAuth;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-}
-
 export async function getOAuthSession() {
   try {
     const OAuthAccountSession = await authAccount.getSession("current");
@@ -69,18 +53,6 @@ export async function updateUserName(name: string) {
   try {
     const userName = await authAccount.updateName(name);
     return userName;
-  } catch (error: any) {
-    throw new Error(error);
-  }
-}
-
-export async function forgotPassword(
-  email: string,
-  redirectUrl = `${BASE_URL}/reset-password`
-) {
-  try {
-    const res = await authAccount.createRecovery(email, redirectUrl);
-    return res;
   } catch (error: any) {
     throw new Error(error);
   }
